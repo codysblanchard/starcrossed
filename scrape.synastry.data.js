@@ -13,7 +13,6 @@ const cps = require('cps');
 var db;
 var user;
 const testing=true;
-const commandForm = "<form method='get'><input name='Body' onload='this.focus();'><input type='hidden' name='From' value='5033125056'></form>";
 const br="\n";
 
 const mysqlconnection = new mysql.DB({

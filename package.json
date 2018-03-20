@@ -7,7 +7,8 @@
     "cps": "^1.0.2",
     "express": "^4.14.0",
     "lodash": "^4.16.6",
-    "node-mysql": "^0.4.2"
+    "node-mysql": "^0.4.2",
+    "request": "^2.85.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

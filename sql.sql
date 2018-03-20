@@ -58,6 +58,32 @@ CREATE TABLE `entity_relationships` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=357 DEFAULT CHARSET=latin1;
 
+/*Table structure for table `users` */
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gender` varchar(6) DEFAULT NULL,
+  `first` varchar(64) DEFAULT NULL,
+  `last` varchar(64) DEFAULT NULL,
+  `email` varchar(128) DEFAULT NULL,
+  `dob` datetime NOT NULL,
+  `phone` varchar(64) DEFAULT NULL,
+  `cell` varchar(64) DEFAULT NULL,
+  `picture` varchar(128) DEFAULT NULL,
+  `username` varchar(32) DEFAULT NULL,
+  `postcode` varchar(32) DEFAULT NULL,
+  `street` varchar(64) DEFAULT NULL,
+  `city` varchar(32) DEFAULT NULL,
+  `country` varchar(32) DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL,
+  `date_created` timestamp NULL DEFAULT NULL,
+  `last_updated` timestamp NULL DEFAULT NULL,
+  `version` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=554 DEFAULT CHARSET=latin1;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

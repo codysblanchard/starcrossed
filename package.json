@@ -1,0 +1,30 @@
+{
+  "name": "starcrossed",
+  "version": "1.0.0",
+  "description": "none",
+  "main": "starcrossed.js",
+  "dependencies": {
+    "cps": "^1.0.2",
+    "express": "^4.14.0",
+    "lodash": "^4.16.6",
+    "node-mysql": "^0.4.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-execute": "^0.2.2"
+  },
+  "scripts": {
+    "test": "hello"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/codysblanchard/starcrossed.git"
+  },
+  "author": "1984 corp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codysblanchard/starcrossed/issues"
+  },
+  "homepage": "https://github.com/codysblanchard/starcrossed#readme"
+}

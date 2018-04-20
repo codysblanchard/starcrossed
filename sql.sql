@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v11.5 (64 bit)
-MySQL - 5.6.21 : Database - starcrossed
+SQLyog Ultimate v10.00 Beta1
+MySQL - 5.5.5-10.1.31-MariaDB : Database - starcrossed
 *********************************************************************
 */
 
@@ -58,6 +58,21 @@ CREATE TABLE `entity_relationships` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=357 DEFAULT CHARSET=latin1;
 
+/*Table structure for table `user_chart` */
+
+DROP TABLE IF EXISTS `user_chart`;
+
+CREATE TABLE `user_chart` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `entity_id` int(11) DEFAULT NULL,
+  `degree` float DEFAULT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `last_updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `version` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 /*Table structure for table `users` */
 
 DROP TABLE IF EXISTS `users`;
@@ -76,13 +91,16 @@ CREATE TABLE `users` (
   `postcode` varchar(32) DEFAULT NULL,
   `street` varchar(64) DEFAULT NULL,
   `city` varchar(32) DEFAULT NULL,
+  `state` varchar(64) DEFAULT NULL,
   `country` varchar(32) DEFAULT NULL,
   `password` varchar(64) DEFAULT NULL,
   `date_created` timestamp NULL DEFAULT NULL,
   `last_updated` timestamp NULL DEFAULT NULL,
   `version` tinyint(4) DEFAULT NULL,
+  `lat` float DEFAULT NULL,
+  `lon` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=554 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

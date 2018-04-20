@@ -11,42 +11,22 @@ const _ = require("lodash");
 const mysql = require('node-mysql');
 //const fs = require("fs");
 const cps = require('cps');
+const db=require('./db');
 
-var db;
-
-const mysqlconnection = new mysql.DB({
-    host:  _.isEmpty(process.env.JAWSDB_MARIA_URL) ? 'localhost' : config.dbhost,
-    user: config.dbuser,
-    password: config.dbpassword,
-    database: _.isEmpty(process.env.JAWSDB_MARIA_URL) ? config.database : 'd2p95tvyuukjw7de'
+db.c.connect((connection)=>{
+    db.c=connection;
+    start();	
 });
 
-
-mysqlconnection.connect((connection)=>{
-    db=connection;
-  	start();
-});
-
-mysqlconnection.add({
-   name:'users',
-    idFieldName:'id',
-    Row:{
-    	
-    },
-    Table:{
-    	
-    }
-});
-const Users = mysqlconnection.get('users');
 
 const start = ()=>{
 	cps.peach(
 		new Array(100),
 		(v,cb)=>{
-			request("https://randomuser.me/api",(e,r,b)=>{
+			request("https://randomuser.me/api?nat=us",(e,r,b)=>{
 				var u = _.first(_.get(JSON.parse(b),"results"));
-				console.log(u);
-				Users.Table.create(db,{
+				//console.log(u);
+				db.users.Table.create(db.c,{
 					gender:u.gender,
 					first:u.name.first,
 					last:u.name.last,
@@ -60,7 +40,8 @@ const start = ()=>{
 					street:u.location.street,
 					city:u.location.city,
 					password:u.login.password,
-					country:u.nat
+					country:u.nat,
+					state:u.location.state
 				},(e,r,f)=>{
 					//console.log(e,r,f);
 					cb();

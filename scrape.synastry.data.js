@@ -1,5 +1,6 @@
 /*
 TODO
+hxf3zo
  */
 
 const _ = require('lodash');
@@ -9,101 +10,17 @@ const app = require('express')();
 const mysql = require('node-mysql');
 const fs = require("fs");
 const cps = require('cps');
+const db = require('./db');
 
 var db;
 var user;
 const testing=true;
 const br="\n";
 
-const mysqlconnection = new mysql.DB({
-    host:  _.isEmpty(process.env.JAWSDB_MARIA_URL) ? 'localhost' : config.dbhost,
-    user: config.dbuser,
-    password: config.dbpassword,
-    database: _.isEmpty(process.env.JAWSDB_MARIA_URL) ? config.database : 'd2p95tvyuukjw7de'
-})
-
-
-mysqlconnection.connect((connection)=>{
-    db=connection;
-  	parseSynastry();
+db.c.connect((connection)=>{
+    parseSynastry();
 });
 
-
-mysqlconnection.add({
-   name:'entities',
-    idFieldName:'id',
-    Row:{
-    	
-    },
-    Table:{
-    	findByName:(name,cb,createIfEmpty)=>{
-    		 db.query("select id from entities where name = ?",[name],(e,r,f)=>{
-    		 	if(e!=null)console.log(e);
-    		 	if(_.isEmpty(r) && createIfEmpty){
-    		 		console.log('creating',name);
-    		 		Entities.Table.create(db,{name:name},(e,r,f)=>{
-    		 			if(e!=null)console.log(e);
-    		 			//console.log(name, 'create complete');
-    		 			cb(r._data.id)
-		 			})
-    		 	}
-    		 	else cb(_.isEmpty(r) ? r : r[0].id)
-		 	})
-    	}
-    }
-});
-
-mysqlconnection.add({
-   name:'aspects',
-    idFieldName:'id',
-    Row:{
-    	
-    },
-    Table:{
-    	findByName:(name,cb,createIfEmpty)=>{
-    		//console.log('searching for ',name);
-    		 db.query("select id from aspects where name = ?",[name],(e,r,f)=>{
-    		 	if(e!=null)console.log(e);
-    		 	if(_.isEmpty(r) && createIfEmpty){
-    		 		console.log('creating',name);
-    		 		Aspects.Table.create(db,{name:name},(e,r,f)=>{
-    		 			//console.log(name, 'create complete');
-    		 			//console.log(e,r,f);
-    		 			cb(r._data.id)
-		 			})
-    		 	}
-    		 	else cb(_.isEmpty(r) ? r : r[0].id)
-		 	})
-    	}
-    }
-});
-
-mysqlconnection.add({
-   name:'entity_relationships',
-    idFieldName:'id',
-    Row:{
-    	
-    },
-    Table:{
-    	getScore:(entity,entity2,aspect,cb)=>{
-    		 db.query("select id from aspects where name = ?",[name],(e,r,f)=>{
-    		 	cb(_.isEmpty(r) ? r : r[0].score)
-		 	})
-    	}
-    }
-});
-
-const Relationships = mysqlconnection.get('entity_relationships');
-const Aspects = mysqlconnection.get('aspects');
-const Entities = mysqlconnection.get('entities');
-
-Entities.Table.relatesTo({
-	name:"entity2",
-	leftKey:"entity_id",
-	rightKey:"entity2_id",
-	through:"entity_relationships",
-	table:"entities"
-})
 
 function parseSynastry(){
 	fs.readFile('synastry.dat', 'utf8', async function(err, contents) {
@@ -140,13 +57,13 @@ function parseSynastry(){
 				
 				//var callback=_.after(parts.length-1,cb);
 				
-				Entities.Table.findByName(entity1,(r)=>{
-					Entities.Table.findByName(entity2,(r2)=>{
+				db.entities.Table.findByName(entity1,(r)=>{
+					db.entities.Table.findByName(entity2,(r2)=>{
 							for(let pc in parts){
 								var p = parts[pc]
-								Aspects.Table.findByName(p,(r3)=>{
+								db.aspects.Table.findByName(p,(r3)=>{
 									//console.log(r,r2,r3);
-									Relationships.Table.create(db,{entity_id:r,entity2_id:r2,aspect_id:r3,score:score},pc==parts.length-1 ? cb : ()=>{});
+									db.relationships.Table.create(db.c,{entity_id:r,entity2_id:r2,aspect_id:r3,score:score},pc==parts.length-1 ? cb : ()=>{});
 								},true);
 							}
 						},true);

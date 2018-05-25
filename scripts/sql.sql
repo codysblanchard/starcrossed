@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v10.00 Beta1
-MySQL - 5.5.5-10.1.31-MariaDB : Database - starcrossed
+SQLyog Ultimate v11.5 (64 bit)
+MySQL - 5.6.21 : Database - starcrossed
 *********************************************************************
 */
 
@@ -26,6 +26,8 @@ CREATE TABLE `aspects` (
   `date_created` timestamp NULL DEFAULT NULL,
   `last_updated` timestamp NULL DEFAULT NULL,
   `version` tinyint(4) DEFAULT NULL,
+  `minangle` smallint(4) DEFAULT NULL,
+  `maxangle` smallint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
@@ -71,6 +73,25 @@ CREATE TABLE `user_chart` (
   `last_updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `version` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1101 DEFAULT CHARSET=latin1;
+
+/*Table structure for table `user_scores` */
+
+DROP TABLE IF EXISTS `user_scores`;
+
+CREATE TABLE `user_scores` (
+  `user_id` int(11) NOT NULL,
+  `user2_id` int(11) NOT NULL,
+  `fours` tinyint(4) DEFAULT NULL,
+  `threes` tinyint(4) DEFAULT NULL,
+  `twos` tinyint(4) DEFAULT NULL,
+  `ones` tinyint(4) DEFAULT NULL,
+  `nones` tinyint(4) DEFAULT NULL,
+  `ntwos` tinyint(4) DEFAULT NULL,
+  `nthrees` tinyint(4) DEFAULT NULL,
+  `nfours` tinyint(4) DEFAULT NULL,
+  `overall_score` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`user2_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Table structure for table `users` */

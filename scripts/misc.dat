@@ -1,0 +1,57 @@
+/*
+At least one combination in the Strongest Compatibility (weight 4) category
+At least 4 or 5 in the Very Strong Compatibility (weight 3) category
+Zero or at most 1 in the Red Alert (weight -4) category
+At most 3 in the weight -3 category
+At least 3 but no more than 7 in the weight -2 category [Note that it IS desirable to have some challenging aspects in a relationship.]
+*/
+
+SELECT
+uc.user_id, uc2.user_id,
+uc.degree, uc2.`degree`
+,uc.`entity_id`,uc2.`entity_id`
+,ABS(uc.degree-uc2.degree) AS diff
+,a.name
+,er.score
+
+,SUM(IF(er.score =4,1,0)) AS fours
+,SUM(IF(er.score =3,1,0)) AS threes
+,SUM(IF(er.score =2,1,0)) AS twos
+,SUM(IF(er.score =1,1,0)) AS ones
+,SUM(IF(er.score =-4,1,0)) AS nfours
+,SUM(IF(er.score =-3,1,0)) AS nthrees
+,SUM(IF(er.score =-2,1,0)) AS ntwos
+,SUM(IF(er.score =-1,1,0)) AS nones
+
+,IF(SUM(IF(er.score =4,1,0))>0,1,0)+
+IF(SUM(IF(er.score =4,1,0))>1,1,0)+
+IF(SUM(IF(er.score =3,1,0))>=4,1,0)+
+IF(SUM(IF(er.score =-4,1,0))>0,-1,0)+
+IF(SUM(IF(er.score =-3,1,0))<=3,1,0)+
+IF(SUM(IF(er.score =-2,1,0)) BETWEEN 3 AND 7,1,0)
+AS overall_score
+
+FROM user_chart uc
+
+JOIN user_chart uc2
+ON uc.`user_id`=2
+AND uc2.`user_id`=36
+
+JOIN aspects a
+ON ABS(uc.degree-uc2.degree) BETWEEN a.minangle AND a.maxangle
+
+LEFT JOIN entity_relationships er
+ON er.`aspect_id`=a.id
+AND (
+	(
+	er.`entity_id`=uc.`entity_id`
+	AND
+	er.`entity2_id`=uc2.`entity_id`
+	)
+	OR
+	(
+	er.`entity2_id`=uc.`entity_id`
+	AND
+	er.`entity_id`=uc2.`entity_id`
+	)
+)

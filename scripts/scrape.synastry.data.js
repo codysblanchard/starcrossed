@@ -18,6 +18,7 @@ const testing=true;
 const br="\n";
 
 db.c.connect((connection)=>{
+  db.c=connection;
     parseSynastry();
 });
 
@@ -54,23 +55,23 @@ function parseSynastry(){
 				var aspect="";
 
 				parts = _.compact(_.map(parts.join().split(/\,|or/),_.trim));
-				
+
 				//var callback=_.after(parts.length-1,cb);
-				
-				db.entities.Table.findByName(entity1,(r)=>{
-					db.entities.Table.findByName(entity2,(r2)=>{
+
+				db.entities.Table.findByName(db.c,entity1,(r)=>{
+					db.entities.Table.findByName(db.c,entity2,(r2)=>{
 							for(let pc in parts){
 								var p = parts[pc]
-								db.aspects.Table.findByName(p,(r3)=>{
+								db.aspects.Table.findByName(db.c,p,(r3)=>{
 									//console.log(r,r2,r3);
 									db.relationships.Table.create(db.c,{entity_id:r,entity2_id:r2,aspect_id:r3,score:score},pc==parts.length-1 ? cb : ()=>{});
 								},true);
 							}
 						},true);
 					},true);
-				
+
 				//let [e1,e2,asp] = await Promise.all([entity1,entity2,aspect]);
-			
+
 			},
 			(a,b,c)=>{console.log('done')}
 		);

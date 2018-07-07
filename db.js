@@ -24,22 +24,22 @@ mysqlconnection.add({
    name:'entities',
     idFieldName:'id',
     Row:{
-    	
+
     },
     Table:{
-    	findByName:(name,cb,createIfEmpty)=>{
-    		 mysqlconnection.query("select id from entities where name = ?",[name],(e,r,f)=>{
-    		 	if(e!=null)console.log(e);
-    		 	if(_.isEmpty(r) && createIfEmpty){
-    		 		console.log('creating',name);
-    		 		Entities.Table.create(db,{name:name},(e,r,f)=>{
-    		 			if(e!=null)console.log(e);
-    		 			//console.log(name, 'create complete');
-    		 			cb(r._data.id)
-		 			})
-    		 	}
-    		 	else cb(_.isEmpty(r) ? r : r[0].id)
-		 	})
+    	findByName:(db,name,cb,createIfEmpty)=>{
+         db.query("select id from entities where name = ?",[name],(e,r,f)=>{
+             	if(e!=null)console.log(e);
+        		 	if(_.isEmpty(r) && createIfEmpty){
+        		 		console.log('creating',name);
+        		 		Entities.Table.create(db,{name:name},(e,r,f)=>{
+        		 			if(e!=null)console.log(e);
+        		 			//console.log(name, 'create complete');
+        		 			cb(r._data.id)
+    		 			  });
+        		 	}
+        		 	else cb(_.isEmpty(r) ? r : r[0].id)
+    		 	})
     	}
     }
 });
@@ -48,7 +48,7 @@ mysqlconnection.add({
    name:'aspects',
     idFieldName:'id',
     Row:{
-    	
+
     },
     Table:{
     	findByName:(name,cb,createIfEmpty)=>{
@@ -73,7 +73,7 @@ mysqlconnection.add({
    name:'entity_relationships',
     idFieldName:'id',
     Row:{
-    	
+
     },
     Table:{
     	getScore:(entity,entity2,aspect,cb)=>{
@@ -100,7 +100,7 @@ Entities.Table.relatesTo({
 
 
 module.exports = {
-	c: mysqlconnection, 
+	c: mysqlconnection,
 	entities: mysqlconnection.get('entities'),
 	aspects: mysqlconnection.get('aspects'),
 	relationships: mysqlconnection.get('entity_relationships'),

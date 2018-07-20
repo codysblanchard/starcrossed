@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const mysql = require('node-mysql');
 const cps = require('cps');
-const db = require('./db.js');
+const db = require('../db.js');
 db.c.connect((connection)=>{
   db.c=connection;
 	start();

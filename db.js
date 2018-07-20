@@ -17,7 +17,17 @@ mysqlconnection.add({
 
     },
     Table:{
-
+      get:(db,id,cb)=>{
+         db.query("select * from users where id = ?",[id],(e,r,f)=>{
+              if(e!=null)console.log(e);
+              cb(_.isEmpty(r) ? r : r[0])
+          })
+      },
+      getOrderByScore:(db,id,cb)=>{
+          db.query("select u.*,uc.* from user_scores uc join users u on u.id=uc.user2_id join users me on me.id=user_id where u.gender != me.gender and uc.user_id = ? order by overall_score desc",[id],(e,r,f)=>{
+            cb(r);
+          })
+      }
     }
 });
 mysqlconnection.add({

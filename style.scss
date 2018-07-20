@@ -1,0 +1,48 @@
+$nav-width:100px;
+
+*{
+  margin:0px;
+  padding:0px;
+  transition: all 0.5s ease;
+}
+.user{
+  padding:10px;
+  float:left;
+}
+.user div{
+  padding:5px;
+}
+.user .pic{
+  width:128px;
+  height:128px;
+  overflow: hidden;
+}
+.user.me{
+  float:none;
+  height:145px;
+}
+.user.me .pic{
+  float:left;
+  padding-right: 35px;
+}
+.hamburger{
+  position: absolute;
+  left:-10px;
+}
+.menu{
+  position:absolute;
+  right:0px;
+  width:$nav-width;
+  background:white;
+  height:100%;
+  li{
+    padding:5px 10px;
+    display:block;
+  }
+}
+.menu.hidden{
+  right:-$nav-width
+}
+.clickable{
+  cursor: pointer
+}

@@ -1,7 +1,8 @@
 const _ = require('lodash');
 const config = require('./config');
 const lang = require('./lang');
-const app = require('express')();
+const express = require('express');
+const app = express();
 const db = require('./db');
 const fs = require("fs");
 
@@ -38,6 +39,7 @@ app.get('/mylist/:userid',(req,res)=>{
     res.send(JSON.stringify(r))
   })
 })
+app.use(express.static('public'));
 
 function userInput(input,res){
     o={};
